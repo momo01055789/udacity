@@ -1,25 +1,24 @@
 // INITIALLIZING GLOBAL VARIABLES
 
-const sectionsElements = document.querySelectorAll("section");
-const Navbar = document.getElementById("navbar__list");
+const Sections = document.querySelectorAll("section");
 
-// change title's text
-const title = document.getElementById("landing-title");
+const Navbar = document.getElementById("navList");
 
-let navList = "";
+// change the title
+const title = document.getElementById("title");
+
+let navbarList = "";
 
 title.textContent = `MY PROJECT`;
 
 // CREATE NAVBAR FROM THE SECTION ELEMENTS
 function createNav() {
-  sectionsElements.forEach((section) => {
-    // add html li tags to navbar_list variable
-    // dataset.nav returns nav: section 1
-    navList += `<li> <a class="nav__link menu__link" href="#${section.id}" id="navli">
+  Sections.forEach((section) => {
+    navbarList += `<li> <a class="navLink menuLink" href="#${section.id}" id="navL">
           ${section.dataset.nav}</a></li>`;
   });
-  // add the tags to the inner htmls
-  Navbar.innerHTML = navList;
+  // add the navbar links to the html
+  Navbar.innerHTML = navbarList;
 }
 createNav();
 
@@ -29,40 +28,40 @@ function addActiveClass(section) {
   const id = section.getAttribute("id");
 
   // add the active class to the section
-  document.querySelector(`#${id}`).classList.add("your-active-class");
+  document.querySelector(`#${id}`).classList.add("activeClass");
 }
 
 // calcualting when the section is active
-function makeActiveSection() {
-  sectionsElements.forEach((section) => {
+function activeSection() {
+  Sections.forEach((section) => {
     let elementOffset = section.getBoundingClientRect();
-    if (elementOffset.top <= 150 && elementOffset.bottom >= 150) {
+    if (elementOffset.top <= 180 && elementOffset.bottom >= 180) {
       addActiveClass(section);
     } else {
-      removeActiveClass(section);
+      deleteActiveClass(section);
     }
   });
 }
 
 //Removing the active class from the section
-function removeActiveClass(section) {
+function deleteActiveClass(section) {
   const id = section.getAttribute("id");
-  document.querySelector(`#${id}`).classList.remove("your-active-class");
+  document.querySelector(`#${id}`).classList.remove("activeClass");
 }
 
 // listening to the function while scrolling on the document
-document.addEventListener("scroll", makeActiveSection);
+document.addEventListener("scroll", activeSection);
 
 let navbar = document.getElementById("navbar").querySelectorAll("li");
 
-// itrate in li items list
+// add or remove active class in nav links
 navbar.forEach((item) => {
   item.addEventListener("click", function () {
     navbar.forEach((item) => {
-      // remove every navbarclick class added before in any list item
-      item.classList.remove("navbarclick");
+      // remove the active class if navbar not clicked
+      item.classList.remove("navbarActive");
     });
-    // add the class on the button
-    item.classList.add("navbarclick");
+    // add active class to nav link
+    item.classList.add("navbarActive");
   });
 });
